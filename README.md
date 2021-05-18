@@ -1,6 +1,12 @@
 # starve-free-reader-writers-problem
 
-The reader-writer problems deal with synchronizing multiple processes trying to read or write upon a shared data. The first and second problem provide a solution where either the reader or writer processes can possibly starve. The third readers-writers problem deals with an implementation where neither the reader or the writer process will ever starve. C++ implementation is given below:
+The reader-writer problems deal with synchronizing multiple processes trying to read or write upon a shared data. The first and second problem provide a solution where either the reader or writer processes can possibly starve. The third readers-writers problem deals with an implementation where neither the reader or the writer process will ever starve.
+
+## Solution idea:
+
+Let's first consider a writer process. First the process will check the number of active and waiting readers. If both, the number of waiting readers and number of active readers are zero, then the it will read away directly. Otherwise, it will wait until a reader process signals and allows that writer to enter.Once the writer process is done, if it is the last writer, then it will signal and allow all the writers "waiting" readers process to enter. Similarily, the last reader process will signal and allow the "waiting" writers processes to enter.
+
+The solution can be visualized by imagining a room and two benches outside the room for waiting reader and writer process. Suppose you are a writer, if there is no reader inside and no reader on the bench, you can enter. If there are readers inside, then the last reader before leaving will allow all the writers on the bench to enter in the room. Similarily, the last writer to leave the room will allow all the readers on the bench to enter.
 
 ## The Semaphore
 
@@ -144,6 +150,7 @@ Thus, it will be pretty clear how we manage to make a starve-free solution for t
 ## References
 
 - https://arxiv.org/abs/1309.4507
+- http://www.cs.umd.edu/~hollings/cs412/s98/synch/synch1.html
 - Abraham Silberschatz, Peter B. Galvin, Greg Gagne - Operating System Concepts
 
 
